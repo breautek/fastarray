@@ -1,0 +1,27 @@
+{
+  "name": "@breautek/fastarray",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/fastarray.js",
+  "types": "lib/fastarray.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breautek/fastarray.git"
+  },
+  "author": "norman@normanbreau.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/breautek/fastarray/issues"
+  },
+  "homepage": "https://github.com/breautek/fastarray#readme",
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "tslib": "^1.9.3"
+  }
+}
