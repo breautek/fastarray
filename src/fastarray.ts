@@ -95,3 +95,5 @@ export class FastArray<T> {
         // return this;
     // }
 }
+
+export default FastArray;
