@@ -2,3 +2,5 @@ src
 node_modules
 .gitignore
 tsconfig.json
+spec
+jasmine.json

@@ -1,14 +1,16 @@
 
+const DEFAULT_INITIAL_SIZE: number = 1000;
+
 export class FastArray<T> {
     private _data: Array<T>;
     private _pushIndex: number;
 
-    public constructor(initialSize: number = 1000) {
+    public constructor(initialSize: number = DEFAULT_INITIAL_SIZE) {
         this._data = new Array<T>(initialSize);
         this._pushIndex = 0;
     }
 
-    get length(): number {
+    public get length(): number {
         return this._pushIndex;
     }
 
@@ -28,9 +30,10 @@ export class FastArray<T> {
         return this._data[index];
     }
 
-    public unshift(item: T): void {
+    public unshift(item: T): number {
         this._data.unshift(item);
         this._pushIndex++;
+        return this.length;
     }
 
     public push(item: T): void {
@@ -39,7 +42,9 @@ export class FastArray<T> {
     }
 
     public shift(): T {
-        return this._data.shift();
+        var item: T = this._data.shift();
+        this._pushIndex--;
+        return item;
     }
 
     public pop(): T {
@@ -68,8 +73,9 @@ export class FastArray<T> {
         }
     }
 
-    public splice(pos: number, n: number): Array<T> {
-        var data: Array<T> = this._data.splice(pos, n);
+    public splice(pos: number, n: number, ...items: Array<any>): Array<T> {
+        var args: Array<any> = [pos, n].concat(items);
+        var data: Array<T> = this._data.splice.apply(this._data, args);
         this._pushIndex -= data.length;
         return data;
     }
@@ -86,6 +92,45 @@ export class FastArray<T> {
         var array = new FastArray<T>(data.length);
         array.___setData(data, this._pushIndex);
         return array;
+    }
+
+    public concat(array: FastArray<T> | Array<T>): FastArray<T> {
+        var fast: Array<T> = null;
+        if (array instanceof FastArray) {
+            fast = array.toArray();
+        }
+        else {
+            fast = array;
+        }
+
+        var newArray: Array<T> = this.toArray().concat(fast);
+        var initSize: number = newArray.length > DEFAULT_INITIAL_SIZE ? newArray.length : DEFAULT_INITIAL_SIZE;
+        var newFast: FastArray<T> = new FastArray<T>(initSize);
+        newFast.___setData(newArray, newArray.length);
+        return newFast;
+    }
+
+    public static from(array: FastArray<any> | Array<any> | string): FastArray<any> {
+        if (array instanceof Array) {
+            var fastArray: FastArray<any> = new FastArray<any>();
+            fastArray.___setData(array.slice(), array.length);
+            return fastArray;
+        }
+        else if (typeof array === 'string') {
+            return FastArray.from(array.split(''));
+        }
+        else {
+            return array.slice();
+        }
+    }
+
+    public static isFastArray(item: any): boolean {
+        return item instanceof FastArray;
+    }
+
+    public static of(...item: any): FastArray<any> {
+        var arr: Array<any> = Array.of.apply(null, item);
+        return FastArray.from(arr);
     }
 
     // public reverse(): FastArray<T> {
