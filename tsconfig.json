@@ -11,5 +11,17 @@
         "alwaysStrict": true,
         "moduleResolution": "node",
         "baseUrl": "./",
-    }
+        "plugins": [
+            {
+                "name": "typescript-tslint-plugin" 
+            }
+        ]
+    },
+    "exclude": [
+        "**/*.spec.ts",
+        "*/.spec.ts",
+        "tests",
+        "lib",
+        "spec"
+    ]
 }

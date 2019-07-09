@@ -4,9 +4,20 @@
   "description": "",
   "main": "lib/fastarray.js",
   "types": "lib/fastarray.d.ts",
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "include": "src/**/*.ts",
+    "extension": [
+      ".ts"
+    ]
+  },
   "scripts": {
-    "build": "tsc",
-    "test": "ts-node node_modules/jasmine/bin/jasmine --config=./jasmine.json"
+    "unit-test": "jasmine-ts ./spec/**/*.spec.ts",
+    "test": "npm run-script lint && nyc --reporter=lcov --reporter=text jasmine-ts ./spec/**/*.spec.ts",
+    "build": "npm run-script lint && tsc",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "coverage": "nyc check-coverage"
   },
   "repository": {
     "type": "git",
@@ -19,14 +30,20 @@
   },
   "homepage": "https://github.com/breautek/fastarray#readme",
   "devDependencies": {
-    "@types/jasmine": "^3.3.8",
-    "@types/sinon": "^7.0.5",
-    "jasmine": "^3.3.1",
-    "sinon": "^7.2.3",
-    "ts-node": "^8.0.2",
-    "typescript": "3.3.3"
+    "@breautek/jasmine-ts": "^1.0.0",
+    "@types/jasmine": "^3.3.13",
+    "@types/sinon": "^7.0.13",
+    "jasmine": "^3.4.0",
+    "jasmine-spec-reporter": "^4.2.1",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tsutils": "^3.14.0",
+    "typescript": "^3.5.3",
+    "typescript-tslint-plugin": "^0.5.3"
   },
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^1.10.0"
   }
 }

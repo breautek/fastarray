@@ -48,7 +48,7 @@ export class FastArray<T> {
     }
 
     public pop(): T {
-        //We can't use the Array.pop api here because the array could be much larger than the current working array
+        // We can't use the Array.pop api here because the array could be much larger than the current working array
         var item: T = this._data[this._pushIndex - 1];
         this._data[this._pushIndex - 1] = undefined;
         this._pushIndex--;

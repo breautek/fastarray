@@ -1,4 +1,4 @@
-import "jasmine";
+import 'jasmine';
 import FastArray from '../src/fastarray';
 import * as sinon from 'sinon';
 
@@ -224,41 +224,43 @@ describe('FastArray', () => {
         expect(newFast.getAt(5)).toBe('3');
     });
 
-    it('performs much faster (insert) than normal arrays', () => {
-        const size: number = 1000000;
-        const sampleSize: number = 1000;
+    // This might be better using a real benchmark library
+    // it('performs much faster (insert) than normal arrays', () => {
+    //     const size: number = 100000;
+    //     const sampleSize: number = 1000;
 
-        var avgFastSpeed: number = 0;
-        var avgNormalSpeed: number = 0;
+    //     var avgFastSpeed: number = 0;
+    //     var avgNormalSpeed: number = 0;
 
-        for (var j: number = 0; j < sampleSize; j++) {
-            const normalArrayStartTime: number = new Date().getTime();
-            var normalArray: Array<any> = [];
-            for (var i: number = 0; i < size; i++) {
-                normalArray.push({});
-            }
-            const normalArrayEndTime: number = new Date().getTime();
-            avgNormalSpeed += normalArrayEndTime - normalArrayStartTime;
-        }
+    //     for (var j: number = 0; j < sampleSize; j++) {
+    //         const normalArrayStartTime: number = new Date().getTime();
+    //         var normalArray: Array<any> = [];
+    //         for (var i: number = 0; i < size; i++) {
+    //             normalArray.push({});
+    //         }
+    //         const normalArrayEndTime: number = new Date().getTime();
+    //         avgNormalSpeed += normalArrayEndTime - normalArrayStartTime;
+    //     }
 
-        for (var j: number = 0; j < sampleSize; j++) {
-            const fastArrayStartTime: number = new Date().getTime();
-            var fastArray: FastArray<any> = new FastArray<any>(size);
-            for (var i: number = 0; i < size; i++) {
-                fastArray.push({});
-            }
-            const fastArrayEndTime: number = new Date().getTime();
-            avgFastSpeed += fastArrayEndTime - fastArrayStartTime; 
-        }
+    //     for (var j: number = 0; j < sampleSize; j++) {
+    //         const fastArrayStartTime: number = new Date().getTime();
+    //         var fa: FastArray<any> = new FastArray<any>(size);
+    //         for (var i: number = 0; i < size; i++) {
+    //             fa.push({});
+    //         }
+    //         const fastArrayEndTime: number = new Date().getTime();
+    //         avgFastSpeed += fastArrayEndTime - fastArrayStartTime; 
+    //     }
 
-        avgFastSpeed /= sampleSize;
-        avgNormalSpeed /= sampleSize;
+    //     avgFastSpeed /= sampleSize;
+    //     avgNormalSpeed /= sampleSize;
 
-        console.log();
-        console.log('Normal Time', avgNormalSpeed, 'ms');
-        console.log('Fast Time', avgFastSpeed, 'ms');
-        console.log();
+    //     // tslint:disable: no-console
+    //     console.log();
+    //     console.log('Normal Time', avgNormalSpeed, 'ms');
+    //     console.log('Fast Time', avgFastSpeed, 'ms');
+    //     console.log();
 
-        expect(avgFastSpeed).toBeLessThan(avgNormalSpeed);
-    });
+    //     expect(avgFastSpeed).toBeLessThan(avgNormalSpeed);
+    // });
 });
