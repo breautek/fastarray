@@ -1,6 +1,6 @@
 {
   "name": "@breautek/fastarray",
-  "version": "0.0.5",
+  "version": "0.0.6-dev",
   "description": "",
   "main": "lib/fastarray.js",
   "types": "lib/fastarray.d.ts",
