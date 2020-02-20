@@ -10,12 +10,7 @@
         "noImplicitThis": true,
         "alwaysStrict": true,
         "moduleResolution": "node",
-        "baseUrl": "./",
-        "plugins": [
-            {
-                "name": "typescript-tslint-plugin" 
-            }
-        ]
+        "baseUrl": "./"
     },
     "exclude": [
         "**/*.spec.ts",

@@ -1,6 +1,8 @@
-src
 node_modules
 .gitignore
 tsconfig.json
 spec
 jasmine.json
+.eslintrc.js
+.eslintcache
+tsconfig-tests.json

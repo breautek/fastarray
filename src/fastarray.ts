@@ -42,14 +42,14 @@ export class FastArray<T> {
     }
 
     public shift(): T {
-        var item: T = this._data.shift();
+        let item: T = this._data.shift();
         this._pushIndex--;
         return item;
     }
 
     public pop(): T {
         // We can't use the Array.pop api here because the array could be much larger than the current working array
-        var item: T = this._data[this._pushIndex - 1];
+        let item: T = this._data[this._pushIndex - 1];
         this._data[this._pushIndex - 1] = undefined;
         this._pushIndex--;
         return item;
@@ -68,14 +68,14 @@ export class FastArray<T> {
     }
 
     public forEach(fn: (item: T, index: number) => void): void {
-        for (var i: number = 0; i < this._pushIndex; i++) {
+        for (let i: number = 0; i < this._pushIndex; i++) {
             fn(this._data[i], i);
         }
     }
 
     public splice(pos: number, n: number, ...items: Array<any>): Array<T> {
-        var args: Array<any> = [pos, n].concat(items);
-        var data: Array<T> = this._data.splice.apply(this._data, args);
+        let args: Array<any> = [ pos, n ].concat(items);
+        let data: Array<T> = this._data.splice.apply(this._data, args);
         this._pushIndex -= data.length;
         return data;
     }
@@ -88,14 +88,14 @@ export class FastArray<T> {
             end = this._pushIndex;
         }
 
-        var data = this._data.slice(start, end);
-        var array = new FastArray<T>(data.length);
+        let data = this._data.slice(start, end);
+        let array = new FastArray<T>(data.length);
         array.___setData(data, this._pushIndex);
         return array;
     }
 
     public concat(array: FastArray<T> | Array<T>): FastArray<T> {
-        var fast: Array<T> = null;
+        let fast: Array<T> = null;
         if (array instanceof FastArray) {
             fast = array.toArray();
         }
@@ -103,16 +103,16 @@ export class FastArray<T> {
             fast = array;
         }
 
-        var newArray: Array<T> = this.toArray().concat(fast);
-        var initSize: number = newArray.length > DEFAULT_INITIAL_SIZE ? newArray.length : DEFAULT_INITIAL_SIZE;
-        var newFast: FastArray<T> = new FastArray<T>(initSize);
+        let newArray: Array<T> = this.toArray().concat(fast);
+        let initSize: number = newArray.length > DEFAULT_INITIAL_SIZE ? newArray.length : DEFAULT_INITIAL_SIZE;
+        let newFast: FastArray<T> = new FastArray<T>(initSize);
         newFast.___setData(newArray, newArray.length);
         return newFast;
     }
 
     public static from(array: FastArray<any> | Array<any> | string): FastArray<any> {
         if (array instanceof Array) {
-            var fastArray: FastArray<any> = new FastArray<any>();
+            let fastArray: FastArray<any> = new FastArray<any>();
             fastArray.___setData(array.slice(), array.length);
             return fastArray;
         }
@@ -129,7 +129,7 @@ export class FastArray<T> {
     }
 
     public static of(...item: any): FastArray<any> {
-        var arr: Array<any> = Array.of.apply(null, item);
+        let arr: Array<any> = Array.of.apply(null, item);
         return FastArray.from(arr);
     }
 

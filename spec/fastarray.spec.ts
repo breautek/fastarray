@@ -1,9 +1,8 @@
-import 'jasmine';
+
 import FastArray from '../src/fastarray';
-import * as sinon from 'sinon';
 
 describe('FastArray', () => {
-    var fastArray: FastArray<string> = null;
+    let fastArray: FastArray<string> = null;
 
     beforeEach(() => {
         fastArray = new FastArray<string>();
@@ -13,13 +12,13 @@ describe('FastArray', () => {
     });
 
     it('constructs', () => {
-        var a: any = new FastArray();
+        let a: any = new FastArray();
         expect(a._pushIndex).toBe(0);
         expect(a._data.length).toBe(1000);
     });
 
     it('constructs with initial size', () => {
-        var a: any = new FastArray(500);
+        let a: any = new FastArray(500);
         expect(a._pushIndex).toBe(0);
         expect(a._data.length).toBe(500);
     });
@@ -51,7 +50,7 @@ describe('FastArray', () => {
 
     it('can shift', () => {
         expect(fastArray.getAt(0)).toBe('one');
-        var str: string = fastArray.shift();
+        let str: string = fastArray.shift();
         expect(str).toBe('one');
         expect(fastArray.length).toBe(2);
         expect(fastArray.getAt(0)).toBe('two');
@@ -63,7 +62,7 @@ describe('FastArray', () => {
         expect(fastArray.getAt(0)).toBe('one');
         expect(fastArray.length).toBe(3);
 
-        var result: number = fastArray.unshift('zero');
+        let result: number = fastArray.unshift('zero');
         expect(result).toBe(4);
     });
 
@@ -71,14 +70,14 @@ describe('FastArray', () => {
         expect(fastArray.getAt(fastArray.length - 1)).toBe('three');
         expect(fastArray.length).toBe(3);
 
-        var result: string = fastArray.pop();
+        let result: string = fastArray.pop();
         
         expect(result).toBe('three');
         expect(fastArray.length).toBe(2);
     });
 
     it('can toArray', () => {
-        var result: Array<string> = fastArray.toArray();
+        let result: Array<string> = fastArray.toArray();
         expect(result instanceof Array).toBe(true);
         expect(result[0]).toBe('one');
         expect(result[1]).toBe('two');
@@ -106,16 +105,12 @@ describe('FastArray', () => {
     });
 
     it('can forEach', () => {
-        var forFn: sinon.SinonSpy = sinon.spy();
-
+        let forFn: jasmine.Spy = jasmine.createSpy();
         fastArray.forEach(forFn);
-
-        expect(forFn.callCount).toBe(3);
-        var calls: Array<sinon.SinonSpyCall> = forFn.getCalls();
-
-        expect(calls[0].calledWithExactly('one', 0));
-        expect(calls[1].calledWithExactly('two', 1));
-        expect(calls[2].calledWithExactly('three', 2));
+        expect(forFn).toHaveBeenCalledTimes(3);
+        expect(forFn.calls.all()[0].args).toEqual([ 'one', 0 ]);
+        expect(forFn.calls.all()[1].args).toEqual([ 'two', 1 ]);
+        expect(forFn.calls.all()[2].args).toEqual([ 'three', 2 ]);
     });
 
     it('can splice (no items)', () => {
@@ -156,22 +151,26 @@ describe('FastArray', () => {
     });
 
     it('can create array from (Array)', () => {
-        var arr = [1,2,3];
-        var fast: FastArray<number> = FastArray.from(arr);
+        let arr = [
+            1,
+            2,
+            3
+        ];
+        let fast: FastArray<number> = FastArray.from(arr);
         expect(fast.getAt(0)).toBe(1);
         expect(fast.getAt(1)).toBe(2);
         expect(fast.getAt(2)).toBe(3);
     });
 
     it('can create array from (FastArray)', () => {
-        var fast: FastArray<string> = FastArray.from(fastArray);
+        let fast: FastArray<string> = FastArray.from(fastArray);
         expect(fast.getAt(0)).toBe('one');
         expect(fast.getAt(1)).toBe('two');
         expect(fast.getAt(2)).toBe('three');
     });
 
     it('can create array from (string)', () => {
-        var fast: FastArray<string> = FastArray.from('abc');
+        let fast: FastArray<string> = FastArray.from('abc');
         expect(fast.getAt(0)).toBe('a');
         expect(fast.getAt(1)).toBe('b');
         expect(fast.getAt(2)).toBe('c');
@@ -180,7 +179,11 @@ describe('FastArray', () => {
     it('can determine if fast array', () => {
         expect(FastArray.isFastArray(fastArray)).toBe(true);
         expect(FastArray.isFastArray('abc')).toBe(false);
-        expect(FastArray.isFastArray([1,2,3])).toBe(false);
+        expect(FastArray.isFastArray([
+            1,
+            2,
+            3
+        ])).toBe(false);
         expect(FastArray.isFastArray(false)).toBe(false);
         expect(FastArray.isFastArray(true)).toBe(false);
         expect(FastArray.isFastArray(undefined)).toBe(false);
@@ -190,15 +193,19 @@ describe('FastArray', () => {
     });
 
     it('can create FastArray of', () => {
-        var fast: FastArray<number> = FastArray.of(1,2,3);
+        let fast: FastArray<number> = FastArray.of(1, 2, 3);
         expect(fast.getAt(0)).toBe(1);
         expect(fast.getAt(1)).toBe(2);
         expect(fast.getAt(2)).toBe(3);
     });
 
     it('can concat (with array)', () => {
-        var arr: Array<string> = ['1','2','3'];
-        var newFast: FastArray<string> = fastArray.concat(arr);
+        let arr: Array<string> = [
+            '1',
+            '2',
+            '3'
+        ];
+        let newFast: FastArray<string> = fastArray.concat(arr);
 
         expect(newFast).not.toBe(fastArray);
         expect(arr.length + fastArray.length).toBe(newFast.length);
@@ -211,8 +218,12 @@ describe('FastArray', () => {
     });
 
     it('can concat (with fastarray)', () => {
-        var arr: FastArray<string> = FastArray.from(['1','2','3']);
-        var newFast: FastArray<string> = fastArray.concat(arr);
+        let arr: FastArray<string> = FastArray.from([
+            '1',
+            '2',
+            '3'
+        ]);
+        let newFast: FastArray<string> = fastArray.concat(arr);
 
         expect(newFast).not.toBe(fastArray);
         expect(arr.length + fastArray.length).toBe(newFast.length);

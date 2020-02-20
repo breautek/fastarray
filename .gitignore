@@ -3,3 +3,4 @@ lib
 package-lock.json
 coverage
 .nyc_output
+.eslintcache
